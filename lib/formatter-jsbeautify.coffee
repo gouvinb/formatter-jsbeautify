@@ -27,7 +27,7 @@ module.exports = FormatterJsbeautify =
           title: 'Arguments passed to the formatter Javascript'
           type: 'array'
           default: []
-          description: 'Example : `[[PRINT EXAMPLE]]`.'
+          description: 'Example : `-s, 3, -w, 80`.'
     css:
       title: 'CSS'
       type: 'object'
@@ -42,7 +42,7 @@ module.exports = FormatterJsbeautify =
           title: 'Arguments passed to the formatter CSS'
           type: 'array'
           default: []
-          description: 'Example : `[[PRINT EXAMPLE]]`.'
+          description: 'Example : `-config=/usr/local/mycfg/css/.jsbeautifyrc`.'
     less:
       title: 'LESS'
       type: 'object'
@@ -57,7 +57,7 @@ module.exports = FormatterJsbeautify =
           title: 'Arguments passed to the formatter LESS'
           type: 'array'
           default: []
-          description: 'Example : `[[PRINT EXAMPLE]]`.'
+          description: 'Example : `-config=/usr/local/mycfg/less/.jsbeautifyrc`.'
     sass:
       title: 'SASS'
       type: 'object'
@@ -72,7 +72,7 @@ module.exports = FormatterJsbeautify =
           title: 'Arguments passed to the formatter SASS'
           type: 'array'
           default: []
-          description: 'Example : `[[PRINT EXAMPLE]]`.'
+          description: 'Example : `-config=/usr/local/mycfg/css/.jsbeautifyrc`.'
     html:
       title: 'HTML'
       type: 'object'
@@ -87,7 +87,7 @@ module.exports = FormatterJsbeautify =
           title: 'Arguments passed to the formatter HTML'
           type: 'array'
           default: []
-          description: 'Example : `[[PRINT EXAMPLE]]`.'
+          description: 'Example : `-s, 8, -w, 160`.'
 
   provideFormatter: ->
     [
