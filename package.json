@@ -1,9 +1,17 @@
 {
   "name": "formatter-jsbeautify",
   "main": "./lib/formatter-jsbeautify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Formatter for Javascript, HTML, CSS, LESS, SASS.",
-  "keywords": ["format", "formatter", "javascript", "html", "css", "less", "sass"],
+  "keywords": [
+    "format",
+    "formatter",
+    "javascript",
+    "html",
+    "css",
+    "less",
+    "sass"
+  ],
   "repository": "https://github.com/gouvinb/formatter-jsbeautify",
   "license": "MIT",
   "engines": {
