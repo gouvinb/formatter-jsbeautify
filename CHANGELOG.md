@@ -6,7 +6,11 @@
 *   Cursor position
 *   More optimization ?
 
-## 1.0.0 - Complete description
+## 1.0.2 - Complete description
+
+*   Add keywords to package.json
+
+## 1.0.1 - Complete description
 
 *   Add description to package.json
 
