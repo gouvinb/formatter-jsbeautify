@@ -6,9 +6,10 @@
 *   Cursor position
 *   More optimization ?
 
-## 1.0.2 - Complete description
+## 1.0.2 - Complete and fix
 
 *   Add keywords to package.json
+*   Fix on .source.js
 
 ## 1.0.1 - Complete description
 

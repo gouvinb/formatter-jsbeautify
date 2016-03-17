@@ -57,7 +57,8 @@ module.exports = FormatterJsbeautify =
           title: 'Arguments passed to the formatter LESS'
           type: 'array'
           default: []
-          description: 'Example : `-config=/usr/local/mycfg/less/.jsbeautifyrc`.'
+          description:
+            'Example : `-config=/usr/local/mycfg/less/.jsbeautifyrc`.'
     sass:
       title: 'SASS'
       type: 'object'
@@ -99,10 +100,12 @@ module.exports = FormatterJsbeautify =
             command = '/usr/local/bin/node'
             args = []
             args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-            args.push.apply atom.config.get 'formatter-jsbeautify.js.arguments'
+            args.push.apply(args,
+              atom.config.get 'formatter-jsbeautify.js.arguments')
             args.push '--type'
-            args.push 'css'
+            args.push 'js'
             args.push '-n'
+            console.log args
             toReturn = []
             toReturnErr = []
             process = child_process.spawn(command, args, {})
@@ -114,7 +117,8 @@ module.exports = FormatterJsbeautify =
               if toReturn.length isnt 0
                 resolve(toReturn.join('\n'))
               else
-                atom.notifications.addError('formatter-jsbeautify : error', {dismissable: true, detail: toReturnErr.join('\n')});
+                atom.notifications.addError('formatter-jsbeautify : error',
+                  {dismissable: true, detail: toReturnErr.join('\n')})
       } if atom.config.get 'formatter-jsbeautify.js.enable'
       {
         selector: '.source.css'
@@ -126,10 +130,11 @@ module.exports = FormatterJsbeautify =
                 command = '/usr/local/bin/node'
                 args = []
                 args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-                args.push.apply atom.config.get 'formatter-jsbeautify.less.arguments'
+                args.push.apply(args, atom.config.get 'formatter-jsbeautify.less.arguments')
                 args.push '--type'
                 args.push 'css'
                 args.push '-n'
+                console.log args
                 toReturn = []
                 toReturnErr = []
                 process = child_process.spawn(command, args, {})
@@ -141,17 +146,43 @@ module.exports = FormatterJsbeautify =
                   if toReturn.length isnt 0
                     resolve(toReturn.join('\n'))
                   else
-                    atom.notifications.addError('formatter-jsbeautify : error', {dismissable: true, detail: toReturnErr.join('\n')});
+                    atom.notifications.addError('formatter-jsbeautify : error',
+                      {dismissable: true, detail: toReturnErr.join('\n')})
+          else if atom.workspace.getActiveTextEditor().getGrammar().scopeName in ['source.sass', 'source.css.scss']
+            if atom.config.get 'formatter-jsbeautify.sass.enable'
+              return new Promise (resolve, reject) ->
+                command = '/usr/local/bin/node'
+                args = []
+                args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
+                args.push.apply(args, atom.config.get 'formatter-jsbeautify.sass.arguments')
+                args.push '--type'
+                args.push 'css'
+                args.push '-n'
+                console.log args
+                toReturn = []
+                toReturnErr = []
+                process = child_process.spawn(command, args, {})
+                process.stderr.on 'data', (data) -> toReturnErr.push data
+                process.stdout.on 'data', (data) -> toReturn.push data
+                process.stdin.write text
+                process.stdin.end()
+                process.on 'close', ->
+                  if toReturn.length isnt 0
+                    resolve(toReturn.join('\n'))
+                  else
+                    atom.notifications.addError('formatter-jsbeautify : error',
+                      {dismissable: true, detail: toReturnErr.join('\n')})
           else
             if atom.config.get 'formatter-jsbeautify.css.enable'
               return new Promise (resolve, reject) ->
                 command = '/usr/local/bin/node'
                 args = []
                 args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-                args.push.apply atom.config.get 'formatter-jsbeautify.css.arguments'
+                args.push.apply(args, atom.config.get 'formatter-jsbeautify.css.arguments')
                 args.push '--type'
                 args.push 'css'
                 args.push '-n'
+                console.log args
                 toReturn = []
                 toReturnErr = []
                 process = child_process.spawn(command, args, {})
@@ -163,45 +194,22 @@ module.exports = FormatterJsbeautify =
                   if toReturn.length isnt 0
                     resolve(toReturn.join('\n'))
                   else
-                    atom.notifications.addError('formatter-jsbeautify : error', {dismissable: true, detail: toReturnErr.join('\n')});
+                    atom.notifications.addError('formatter-jsbeautify : error',
+                      {dismissable: true, detail: toReturnErr.join('\n')})
       } if (atom.config.get 'formatter-jsbeautify.css.enable') or (atom.config.get 'formatter-jsbeautify.less.enable')
       {
-        selector: '.source.sass'
+        selector: '.text.html'
         getNewText: (text) ->
           child_process = require 'child_process'
           return new Promise (resolve, reject) ->
             command = '/usr/local/bin/node'
             args = []
             args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-            args.push.apply atom.config.get 'formatter-jsbeautify.sass.arguments'
-            args.push '--type'
-            args.push 'css'
-            args.push '-n'
-            toReturn = []
-            toReturnErr = []
-            process = child_process.spawn(command, args, {})
-            process.stderr.on 'data', (data) -> toReturnErr.push data
-            process.stdout.on 'data', (data) -> toReturn.push data
-            process.stdin.write text
-            process.stdin.end()
-            process.on 'close', ->
-              if toReturn.length isnt 0
-                resolve(toReturn.join('\n'))
-              else
-                atom.notifications.addError('formatter-jsbeautify : error', {dismissable: true, detail: toReturnErr.join('\n')});
-      } if atom.config.get 'formatter-jsbeautify.sass.enable'
-      {
-        selector: '.text.html.basic, text.html.gohtml, text.html.ruby, text.html.mustache, text.html.erb'
-        getNewText: (text) ->
-          child_process = require 'child_process'
-          return new Promise (resolve, reject) ->
-            command = '/usr/local/bin/node'
-            args = []
-            args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-            args.push.apply atom.config.get 'formatter-jsbeautify.html.arguments'
+            args.push.apply(args, atom.config.get 'formatter-jsbeautify.html.arguments')
             args.push '--type'
             args.push 'html'
             args.push '-n'
+            console.log args
             toReturn = []
             toReturnErr = []
             process = child_process.spawn(command, args, {})
@@ -213,6 +221,7 @@ module.exports = FormatterJsbeautify =
               if toReturn.length isnt 0
                 resolve(toReturn.join('\n'))
               else
-                atom.notifications.addError('formatter-jsbeautify : error', {dismissable: true, detail: toReturnErr.join('\n')});
+                atom.notifications.addError('formatter-jsbeautify : error',
+                  {dismissable: true, detail: toReturnErr.join('\n')})
       } if atom.config.get 'formatter-jsbeautify.html.enable'
     ]
