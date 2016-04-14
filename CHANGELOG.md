@@ -11,7 +11,8 @@
 *   Add keywords to package.json
 *   Add some log
 *   Lint file
-*   fix [#1](https://github.com/gouvinb/formatter-jsbeautify/issues/1)
+*   Fix [#1](https://github.com/gouvinb/formatter-jsbeautify/issues/1)
+*   Update README.md
 
 ## 1.0.1 - Complete description
 

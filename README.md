@@ -32,7 +32,11 @@ Default (inspired from IntelliJ):
 
 ### List of config
 
--   Path to the exectuable
+-   Path to the exectuable node
+
+    -   **Full path** node
+
+-   Path to the exectuable js-beautify
 
     -   **Full path** js-beautify
 
