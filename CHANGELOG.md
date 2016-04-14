@@ -6,10 +6,12 @@
 *   Cursor position
 *   More optimization ?
 
-## 1.0.2 - Complete and fix
+## 1.0.2 - Complete && add && lint && fix
 
 *   Add keywords to package.json
-*   Fix on .source.js
+*   Add some log
+*   Lint file
+*   fix [#1](https://github.com/gouvinb/formatter-jsbeautify/issues/1)
 
 ## 1.0.1 - Complete description
 

@@ -9,8 +9,12 @@ module.exports = FormatterJsbeautify =
       title: 'Path to the exectuable'
       type: 'object'
       properties:
+        nodePath:
+          title: 'Full path of exectuable node'
+          type: 'string'
+          default: 'node'
         executablePath:
-          title: 'Full path of exectuable'
+          title: 'Full path of exectuable js-beautify'
           type: 'string'
           default: 'js-beautify'
     js:
@@ -97,7 +101,7 @@ module.exports = FormatterJsbeautify =
         getNewText: (text) ->
           child_process = require 'child_process'
           return new Promise (resolve, reject) ->
-            command = '/usr/local/bin/node'
+            command = atom.config.get 'formatter-jsbeautify.a.nodePath'
             args = []
             args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
             args.push.apply(args,
@@ -124,13 +128,16 @@ module.exports = FormatterJsbeautify =
         selector: '.source.css'
         getNewText: (text) ->
           child_process = require 'child_process'
-          if atom.workspace.getActiveTextEditor().getGrammar().scopeName in ['source.css.less']
+          if atom.workspace.getActiveTextEditor().getGrammar().scopeName in
+              ['source.css.less']
             if atom.config.get 'formatter-jsbeautify.less.enable'
               return new Promise (resolve, reject) ->
-                command = '/usr/local/bin/node'
+                command = atom.config.get 'formatter-jsbeautify.a.nodePath'
                 args = []
-                args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-                args.push.apply(args, atom.config.get 'formatter-jsbeautify.less.arguments')
+                args.push(
+                  atom.config.get 'formatter-jsbeautify.a.executablePath')
+                args.push.apply(args,
+                  atom.config.get 'formatter-jsbeautify.less.arguments')
                 args.push '--type'
                 args.push 'css'
                 args.push '-n'
@@ -148,13 +155,16 @@ module.exports = FormatterJsbeautify =
                   else
                     atom.notifications.addError('formatter-jsbeautify : error',
                       {dismissable: true, detail: toReturnErr.join('\n')})
-          else if atom.workspace.getActiveTextEditor().getGrammar().scopeName in ['source.sass', 'source.css.scss']
+          else if atom.workspace.getActiveTextEditor().getGrammar().scopeName in
+              ['source.sass', 'source.css.scss']
             if atom.config.get 'formatter-jsbeautify.sass.enable'
               return new Promise (resolve, reject) ->
-                command = '/usr/local/bin/node'
+                command = atom.config.get 'formatter-jsbeautify.a.nodePath'
                 args = []
-                args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-                args.push.apply(args, atom.config.get 'formatter-jsbeautify.sass.arguments')
+                args.push(
+                  atom.config.get 'formatter-jsbeautify.a.executablePath')
+                args.push.apply(args,
+                  atom.config.get 'formatter-jsbeautify.sass.arguments')
                 args.push '--type'
                 args.push 'css'
                 args.push '-n'
@@ -175,10 +185,12 @@ module.exports = FormatterJsbeautify =
           else
             if atom.config.get 'formatter-jsbeautify.css.enable'
               return new Promise (resolve, reject) ->
-                command = '/usr/local/bin/node'
+                command = atom.config.get 'formatter-jsbeautify.a.nodePath'
                 args = []
-                args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-                args.push.apply(args, atom.config.get 'formatter-jsbeautify.css.arguments')
+                args.push(
+                  atom.config.get 'formatter-jsbeautify.a.executablePath')
+                args.push.apply(args,
+                  atom.config.get 'formatter-jsbeautify.css.arguments')
                 args.push '--type'
                 args.push 'css'
                 args.push '-n'
@@ -196,16 +208,19 @@ module.exports = FormatterJsbeautify =
                   else
                     atom.notifications.addError('formatter-jsbeautify : error',
                       {dismissable: true, detail: toReturnErr.join('\n')})
-      } if (atom.config.get 'formatter-jsbeautify.css.enable') or (atom.config.get 'formatter-jsbeautify.less.enable')
+      } if (atom.config.get 'formatter-jsbeautify.css.enable') or
+        (atom.config.get 'formatter-jsbeautify.less.enable') or
+        (atom.config.get 'formatter-jsbeautify.sass.enable')
       {
         selector: '.text.html'
         getNewText: (text) ->
           child_process = require 'child_process'
           return new Promise (resolve, reject) ->
-            command = '/usr/local/bin/node'
+            command = atom.config.get 'formatter-jsbeautify.a.nodePath'
             args = []
             args.push atom.config.get 'formatter-jsbeautify.a.executablePath'
-            args.push.apply(args, atom.config.get 'formatter-jsbeautify.html.arguments')
+            args.push.apply(args,
+              atom.config.get 'formatter-jsbeautify.html.arguments')
             args.push '--type'
             args.push 'html'
             args.push '-n'
